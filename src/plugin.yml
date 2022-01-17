@@ -1,0 +1,14 @@
+name: KrazyBoard
+author: KrazyManJ
+version: 1.0.0
+main: me.KrazyManJ.KrazyBoard.Main
+api-version: 1.17
+softdepend:
+  - PlaceholderAPI
+commands:
+  krazyboard:
+    permission: krazyboard.admin
+  tabulka:
+permissions:
+  krazyboard.admin:
+    default: op

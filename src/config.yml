@@ -1,0 +1,14 @@
+board title: "&#0394fc&lKrazyBoard"
+board lines:
+  - "                         "
+  - "   &#03dbfc&oThis is made with"
+  - "  &#03dbfc&nthis awesome plugin!"
+  - ""
+
+# Refresh rate in ticks (20 ticks = 1 second)
+# USE WISELY! LOW REFRESH RATE CAN CAUSE LAGS!
+board refresh rate: 20
+
+language:
+  tabulka toggle on: "&7Tabulka byla zapnutá!"
+  tabulka toggle off: "&7Tabulka byla vypnutá!"
