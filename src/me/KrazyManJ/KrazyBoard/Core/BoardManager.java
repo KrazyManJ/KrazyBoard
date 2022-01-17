@@ -44,14 +44,16 @@ public class BoardManager implements Listener {
             ? Main.getInstance().getConfig().getInt("board refresh rate")
             : 20;
     private List<String> lines = Main.getInstance().getConfig().getStringList("board lines");
+    private String title = Main.getInstance().getConfig().getString("board title");
 
     public void reloadBoardContent(){
         refresh = Main.getInstance().getConfig().getInt("board refresh rate") > 0
                 ? Main.getInstance().getConfig().getInt("board refresh rate")
                 : 20;
         lines = Main.getInstance().getConfig().getStringList("board lines");
+        title = Main.getInstance().getConfig().getString("board title");
     }
-
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public BoardManager() {
         if (!file.exists()) try { file.createNewFile(); } catch (IOException e) { e.printStackTrace(); }
         data = YamlConfiguration.loadConfiguration(file);
@@ -73,16 +75,18 @@ public class BoardManager implements Listener {
     }
     public void stopBoard(Player p){
         if (tasks.containsKey(p.getUniqueId())) Bukkit.getScheduler().cancelTask(tasks.get(p.getUniqueId()));
-        p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+        p.setScoreboard(Objects.requireNonNull(Bukkit.getScoreboardManager()).getNewScoreboard());
     }
+    @SuppressWarnings("ConstantConditions")
     private void createBoard(Player p){
-        Scoreboard board = Objects.requireNonNull(Bukkit.getScoreboardManager()).getNewScoreboard();
-        Objective objective = board.registerNewObjective("KrazyBoard", "dummy",
-                Format.colorize(Main.getInstance().getConfig().getString("board title")));
+        Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
+        Objective objective = board.registerNewObjective("KrazyBoard", "dummy", Format.colorize(title));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         updateBoard(board,objective,p);
         p.setScoreboard(board);
     }
+
+    @SuppressWarnings("ConstantConditions")
     private void updateBoard(Scoreboard board, Objective obj, Player p){
         int count = lines.size()-1;
         for (String line : lines){
@@ -101,11 +105,13 @@ public class BoardManager implements Listener {
     }
 
     @EventHandler
+    @SuppressWarnings("unused")
     private void on(PlayerJoinEvent event) {
         if (hasEnabledBoard(event.getPlayer())) Main.getManager().startBoard(event.getPlayer());
     }
 
     @EventHandler
+    @SuppressWarnings("unused")
     private void on(PlayerQuitEvent event) {
         if (hasEnabledBoard(event.getPlayer())) Main.getManager().stopBoard(event.getPlayer());
     }

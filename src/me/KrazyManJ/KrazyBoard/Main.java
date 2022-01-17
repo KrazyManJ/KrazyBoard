@@ -15,6 +15,7 @@ public class Main extends JavaPlugin {
     public static BoardManager getManager() { return manager; }
 
     @Override
+    @SuppressWarnings("ConstantConditions")
     public void onEnable() {
         instance = this;
         this.saveDefaultConfig();
